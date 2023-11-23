@@ -20,6 +20,8 @@ npm install
 npm start
 ```
 
+### PRÉVIA
+
 <table width="100%">
 <tr width="100%">
 <td>
