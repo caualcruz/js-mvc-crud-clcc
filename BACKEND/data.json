@@ -1,0 +1,44 @@
+[
+  {
+    "nome": "João",
+    "idade": 17,
+    "login": "joaobomba",
+    "senha": "aasdfafasdf"
+  },
+  {
+    "nome": "Maria",
+    "idade": 17,
+    "login": "mariabambina",
+    "senha": "aasdfafasdf"
+  },
+  {
+    "nome": "José",
+    "idade": 17,
+    "login": "jose",
+    "senha": "aasdfafasdf"
+  },
+  {
+    "nome": "Cauã",
+    "idade": 17,
+    "login": "cauaexplosivo",
+    "senha": "aasdfafasdf"
+  },
+  {
+    "nome": "Teste",
+    "idade": "23",
+    "login": "sda",
+    "senha": "asd"
+  },
+  {
+    "nome": "Teste",
+    "idade": "23",
+    "login": "asd",
+    "senha": "asda"
+  },
+  {
+    "nome": "dsdfg",
+    "idade": "",
+    "login": "",
+    "senha": ""
+  }
+]
