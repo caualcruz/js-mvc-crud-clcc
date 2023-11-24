@@ -1,21 +1,20 @@
-import { formNewUser } from "./form-component.js";
-import { view } from "./table-component.js";
+import { formComponent } from "./form-component.js";
+import { tableComponent } from "./table-component.js";
 
 const view = {
-    render:()=>{
-        formNewUser.render();
-        view.render();
-    },
+  render: () => {
+    formComponent.render();
+    tableComponent.render();
+  },
 
-    update:(userArray, userToUpdate)=>{        
-        view.update(userArray);
-        formNewUser.update(userToUpdate);
-        console.log(userArray, userToUpdate);
-    },
+  update: (users, user) => {
+    formComponent.update(user);
+    tableComponent.update(users);
+  },
 
-    updateForm:(userToUpdate)=>{ 
-        formNewUser.update(userToUpdate);
-    }
-}
+  updateForm: (user) => {
+    formComponent.update(user);
+  },
+};
 
-export {view}
+export { view };

@@ -2,88 +2,90 @@ import { view } from "./view/view.js";
 import { Usuario } from "./model/usuario.model.js";
 import { dataService } from "./api/data.service.js";
 
-let data = [];
+let users = [];
+let userId = null;
+const nullUser = new Usuario("", null, "", "");
+
 const submitType = { NEW: 0, UPDATE: 1 };
-const nullUser = new Usuario("", null, "", "")
 let submitState = submitType.NEW;
-let currentId = null;
+
 
 const loadData = async () => {
-  const temp = await dataService.carregarDados();
-
-  data = temp.map(
-    (usuario) =>
-      new Usuario(usuario.nome, usuario.idade, usuario.login, usuario.senha)
+  const data = await dataService.load();
+  users = data.map(
+    (user) => new Usuario(user.nome, user.idade, user.login, user.senha)
   );
+  view.update(users, nullUser);
+};
 
-  view.update(data, nullUser);
+
+//ES6
+const getFormInputs = () => {
+  return new Usuario(nome.value, idade.value, login.value, senha.value);
 };
 
 const handleSubmit = (event) => {
   event.preventDefault();
-  const user = new Usuario(nome.value, idade.value, login.value, senha.value);
+  const user = getFormInputs();
   if (submitState == submitType.NEW) {
     addUser(user);
   } else if (submitState == submitType.UPDATE) {
-    updateUser(currentId, user);
+    updateUser(userId, user);
     submitState = submitType.NEW;
     btnSub.innerText = "Save";
   }
-  view.update(data, nullUser);
+  view.update(users, nullUser);
 };
 
-//FUNÇÕES DE ADICIONAR, ATUALIZAR E REMOVER
+//CRUD
 const addUser = (newUser) => {
-  data.push(newUser);
-  dataService.salvarDados(data);
+  users.push(newUser);
+  dataService.save(users);
 };
 
 const updateUser = (index, userToUpdate) => {
-  data[index] = userToUpdate;
+  users[index] = userToUpdate;
+  dataService.save(users);
 };
 
 const deletUser = (index) => {
-  data.splice(index, 1);
+  users.splice(index, 1);
+  dataService.save(users);
 };
-//FIM FUNÇÕES CRUD
+//FIM CRUD
 
-const getFormInputs = ()=>{
-return new Usuario(nome.value, idade.value, login.value, senha.value)
-}
 
-const handleClick = (event)=>{
-  currentId = event.target.closest("tr").id.split("")[4];
+const handleClick = (event) => {
+  userId = event.target.closest("tr").id.split("")[4];
   if (event.type === "click") {
-    const confimarEditar = window.confirm(
-      `Clicou com o botão esquerdo, e o ${data[currentId]
+    const confirmarEdicao = window.confirm(
+      `Clicou com o botão esquerdo, e o ${users[userId]
         .getNome()
         .toUpperCase()} será carregado para edição`
     );
-  
-    if (confimarEditar) {
-      view.updateForm(data[currentId]);
+    if (confirmarEdicao) {
+      view.updateForm(users[userId]);
       submitState = submitType.UPDATE;
       btnSub.innerText = "Update";
     }
-    
-  } else if (event.type === "contextMenu") {
+  } else if (event.type === "contextmenu") {
     event.preventDefault();
     if (event.button == 2) {
       const confirmarDelecao = window.confirm(
-        `Clicou com o botão direito, e o ${data[currentId]
+        `Clicou com o botão direito, e o ${users[userId]
           .getNome()
           .toUpperCase()} será deletado`
       );
-  
+
       if (confirmarDelecao) {
-        deletUser(currentId);
-        view.update(data, nullUser);
+        deletUser(userId);
+        view.update(users, nullUser);
       }
     }
   }
-}
+};
 
-const setEvents = () => {
+const setEventsListeners = () => {
   const form = document.getElementById("signForm");
   form.addEventListener("submit", handleSubmit);
   const userList = document.getElementById("users-result");
@@ -91,12 +93,10 @@ const setEvents = () => {
   userList.addEventListener("contextmenu", handleClick);
 };
 
-
-
 const controller = {
   run: () => {
     view.render();
-    setEvents();
+    setEventsListeners();
     window.onload = () => {
       loadData();
     };
