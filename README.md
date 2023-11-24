@@ -20,6 +20,14 @@ npm install
 npm start
 ```
 
+---
+
+### Versão 1.0 do projeto
+
+[Node.js](https://nodejs.org/en)
+
+---
+
 ### PRÉVIA
 
 <table width="100%">
