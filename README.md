@@ -24,10 +24,9 @@ npm start
 
 ### Versão 1.0 do projeto
 
-[Node.js](https://nodejs.org/en)
+[Primeira versão](https://github.com/caualcruz/js-mvc-crud-clcc/releases/tag/v1.0)
 
 ---
-
 ### PRÉVIA
 
 <table width="100%">
